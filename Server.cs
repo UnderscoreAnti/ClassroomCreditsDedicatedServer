@@ -89,7 +89,7 @@ public partial class Server : Control
 
 	public void WriteDataToFile(Variant Data = new())
 	{
-		string Content = JSON.Stringify(Data);
+		string Content = Json.Stringify(Data);
 		var File = FileAccess.Open(SaveFilePath, FileAccess.ModeFlags.Write);
 		File.StoreString(Content);
 		
@@ -101,7 +101,7 @@ public partial class Server : Control
 		Rpc(nameof(GetCurrentClassData), CurrentClass);
 	}
 	
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void AddNewClassToDatabase()
 	{
 		string TempClassName;
@@ -126,21 +126,21 @@ public partial class Server : Control
 		Rpc(nameof(UpdateClassName), CurrentClassName);
 	}
 	
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void GetCurrentClassData(string selectedClass)
 	{
 		int ClientID = Multiplayer.GetRemoteSenderId();
 		//RpcId(ClientID, nameof(ProcessClassData), AllClassesData[selectedClass]);
 	}
 	
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void GetAdminData()
 	{
 		AdminID = Multiplayer.GetRemoteSenderId();
 		GD.Print($"Admin Secured! Admin ID: {AdminID.ToString()}".ToString());
 	}
 	
-	[RPC]
+	[Rpc]
 	public void RequestAddNewStudent(Dictionary<string, string> StudentData)
 	{
 		int ClientID = Multiplayer.GetRemoteSenderId();
@@ -149,7 +149,7 @@ public partial class Server : Control
 		// CurrentClass.Add(StudentData);
 	}
 
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void UpdateClassName(string ClassName)
 	{
 		AllClassesData.Remove(CurrentClassName);
@@ -158,44 +158,44 @@ public partial class Server : Control
 		GD.Print(CurrentClassName);
 	}
 	
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void RequestClassUnlock(bool isUnlockRequest = true)
 	{
 		//
 	}
 	
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void OnStudentNameEntered(string NewStudentName)
 	{
 		AddStudentToCurrentClass(NewStudentName);
 	}
 	// GD Boilerplate
 	
-	[RPC]
+	[Rpc]
 	public void ProcessClassData(Array<Dictionary<string, string>> ClassData) { }
 	
 	
-	[RPC]
+	[Rpc]
 	public void ConfirmServerConnection(string ServerMessage)
 	{
 		//
 	}
 
 	
-	[RPC]
+	[Rpc]
 	public void CurrentClassUpdate(string StudentName, bool isRemoval = false)
 	{
 		//
 	}
 	
 
-	[RPC]
+	[Rpc]
 	public void UpdateDataReqest(int RequestType)
 	{
 		//
 	}
 
-	[RPC(MultiplayerAPI.RPCMode.AnyPeer)]
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	public void ClassUnlocked(bool isUnlocked = false)
 	{
 		//
